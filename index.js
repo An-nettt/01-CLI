@@ -5,13 +5,16 @@ async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case 'list':
       const allContacts = await contacts.listContacts();
-      console.log(allContacts);
+      //   console.log(allContacts);
       break;
     case 'get':
-      // ... id
+      const bookById = await contacts.getContactById(id);
+      console.log(bookById);
       break;
 
     case 'add':
+      const newContact = await contacts.addContact({ name, email, phone });
+      console.log(newContact);
       // ... name email phone
       break;
 
@@ -25,4 +28,11 @@ async function invokeAction({ action, id, name, email, phone }) {
 }
 
 // invokeAction(argv);
-invokeAction({ action: 'list' });
+// invokeAction({ action: 'list' });
+// invokeAction({ action: 'get', id: '05olLMgyVQdWRwgKfg5J6' });
+invokeAction({
+  action: 'add',
+  name: 'Mango ',
+  email: 'mango@gmail.com',
+  phone: '322-22-22',
+});
