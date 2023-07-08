@@ -7,28 +7,28 @@ program
   .option('-n, --name <type>', 'user name')
   .option('-e, --email <type>', 'user email')
   .option('-p, --phone <type>', 'user phone');
-program.parse(process.argv);
+program.parse();
 const argv = program.opts();
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case 'list':
       const allContacts = await contacts.listContacts();
-      //   console.log(allContacts);
+      return console.log(allContacts);
       break;
     case 'get':
       const bookById = await contacts.getContactById(id);
-      //   console.log(bookById);
+      return console.log(bookById);
       break;
 
     case 'add':
       const newContact = await contacts.addContact({ name, email, phone });
-      //   console.log(newContact);
+      return console.log(newContact);
       break;
 
     case 'remove':
       const deleteContact = await contacts.removeContact(id);
-      //   console.log(deleteContact);
+      return console.log(deleteContact);
       break;
 
     default:
@@ -37,6 +37,7 @@ async function invokeAction({ action, id, name, email, phone }) {
 }
 
 invokeAction(argv);
+
 // invokeAction({ action: 'list' });
 // invokeAction({ action: 'get', id: '05olLMgyVQdWRwgKfg5J6' });
 // invokeAction({
