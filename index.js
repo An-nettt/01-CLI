@@ -1,5 +1,14 @@
-// const argv = require('yargs').argv;
 const contacts = require('./contacts');
+const { Command } = require('commander');
+const program = new Command();
+program
+  .option('-a, --action <type>', 'choose action')
+  .option('-i, --id <type>', 'user id')
+  .option('-n, --name <type>', 'user name')
+  .option('-e, --email <type>', 'user email')
+  .option('-p, --phone <type>', 'user phone');
+program.parse(process.argv);
+const argv = program.opts();
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
@@ -9,17 +18,17 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
     case 'get':
       const bookById = await contacts.getContactById(id);
-      console.log(bookById);
+      //   console.log(bookById);
       break;
 
     case 'add':
       const newContact = await contacts.addContact({ name, email, phone });
-      console.log(newContact);
-      // ... name email phone
+      //   console.log(newContact);
       break;
 
     case 'remove':
-      // ... id
+      const deleteContact = await contacts.removeContact(id);
+      //   console.log(deleteContact);
       break;
 
     default:
@@ -27,12 +36,13 @@ async function invokeAction({ action, id, name, email, phone }) {
   }
 }
 
-// invokeAction(argv);
+invokeAction(argv);
 // invokeAction({ action: 'list' });
 // invokeAction({ action: 'get', id: '05olLMgyVQdWRwgKfg5J6' });
-invokeAction({
-  action: 'add',
-  name: 'Mango ',
-  email: 'mango@gmail.com',
-  phone: '322-22-22',
-});
+// invokeAction({
+//   action: 'add',
+//   name: 'Mango ',
+//   email: 'mango@gmail.com',
+//   phone: '322-22-22',
+// });
+// invokeAction({ action: 'remove', id: 'qdggE76Jtbfd9eWJHrssH' });
